@@ -31,17 +31,40 @@ from versioning import artifact_version_dict, build_artifact_version
 
 
 TRANSCRIPTS_DIR = ROOT / "transcripts"
+VERSIONS_DIR = ARTIFACTS_DIR / "versions"
 PROVIDERS = ["openrouter", "openai", "anthropic", "gemini"]
-DEFAULT_VERSION = "v4"
 VERSION_PATTERN = re.compile(r"^v\d+$")
+
+
+def list_versions() -> list[str]:
+    """Versions with a snapshot in artifacts/versions/<vN>/, plus the current artifacts/ as the latest."""
+    snapshots = sorted(
+        (d.name for d in VERSIONS_DIR.iterdir() if d.is_dir() and VERSION_PATTERN.fullmatch(d.name)),
+        key=lambda v: int(v[1:]),
+    ) if VERSIONS_DIR.exists() else []
+    latest = f"v{int(snapshots[-1][1:]) + 1}" if snapshots else "v0"
+    return snapshots + [latest]
+
+
+def artifact_paths(version: str) -> tuple[Path, Path]:
+    """Snapshot folder if it exists and is complete; otherwise the live artifacts/ files."""
+    folder = VERSIONS_DIR / version
+    prompt, tools = folder / "system_prompt.md", folder / "tools.yaml"
+    if prompt.exists() and tools.exists():
+        return prompt, tools
+    return ARTIFACTS_DIR / "system_prompt.md", ARTIFACTS_DIR / "tools.yaml"
+
+
+def snapshot_missing(version: str) -> bool:
+    folder = VERSIONS_DIR / version
+    return folder.exists() and not ((folder / "system_prompt.md").exists() and (folder / "tools.yaml").exists())
 
 
 # --------------------------------------------------------------------------- #
 # Session helpers
 # --------------------------------------------------------------------------- #
 def new_session(provider_name: str, model: str | None, version: str, history_window: int, max_tool_rounds: int) -> None:
-    system_prompt_path = ARTIFACTS_DIR / "system_prompt.md"
-    tools_path = ARTIFACTS_DIR / "tools.yaml"
+    system_prompt_path, tools_path = artifact_paths(version)
     artifact_version = build_artifact_version(version, system_prompt_path, tools_path)
     provider = make_provider(provider_name)
     selected_model = model or getattr(provider, "default_model", None)
@@ -185,14 +208,24 @@ def render_sidebar() -> None:
     with st.sidebar.form("session_form"):
         provider_name = st.selectbox("Provider", PROVIDERS, index=PROVIDERS.index(st.session_state.get("provider_name", "openrouter")))
         model = st.text_input("Model (để trống = mặc định của provider)", value=st.session_state.get("model") or "")
-        version = st.text_input("Nhãn version", value=st.session_state.get("version", DEFAULT_VERSION))
+        versions = list_versions()
+        current_version = st.session_state.get("version", versions[-1])
+        version = st.selectbox(
+            "Version (artifact snapshot)",
+            versions,
+            index=versions.index(current_version) if current_version in versions else len(versions) - 1,
+            help="v0–v3 đọc từ artifacts/versions/<vN>/; version mới nhất đọc artifacts/ hiện tại.",
+        )
         history_window = st.number_input("History window (cặp lượt)", min_value=0, max_value=20, value=st.session_state.get("history_window", 5))
         max_tool_rounds = st.number_input("Max tool rounds", min_value=1, max_value=10, value=st.session_state.get("max_tool_rounds", 4))
         submitted = st.form_submit_button("🔄 Phiên mới", use_container_width=True)
 
     if submitted:
-        if not VERSION_PATTERN.fullmatch(version.strip()):
-            st.sidebar.error("Nhãn version phải dạng v0, v1, v2 …")
+        if snapshot_missing(version):
+            st.sidebar.error(
+                f"Chưa có artifact cho {version}: cần system_prompt.md + tools.yaml trong "
+                f"artifacts/versions/{version}/ (xem artifacts/versions/README.md)."
+            )
         else:
             try:
                 new_session(provider_name, model.strip() or None, version.strip(), int(history_window), int(max_tool_rounds))
@@ -210,7 +243,9 @@ def render_sidebar() -> None:
             f"prompt_hash      : {av.prompt_hash[:16]}…\n"
             f"tools_hash       : {av.tools_hash[:16]}…\n"
             f"provider/model   : {st.session_state.provider_name} / {st.session_state.selected_model}\n"
-            f"tools declared   : {len(st.session_state.openai_tools)}",
+            f"tools declared   : {len(st.session_state.openai_tools)}\n"
+            f"prompt file      : {Path(st.session_state.transcript['system_prompt']).relative_to(ROOT)}\n"
+            f"tools file       : {Path(st.session_state.transcript['tools']).relative_to(ROOT)}",
             language="text",
         )
         st.sidebar.markdown("**Transcript**")

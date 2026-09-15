@@ -85,7 +85,7 @@ Chạy từ `starter_v0/` sau khi đã cài `requirements.txt` và điền `.env
 streamlit run app.py
 ```
 
-Mở http://localhost:8501, chọn provider và nhãn version ở sidebar rồi bấm **Phiên mới**. Mỗi lượt hiển thị tool → args → result hoặc error (expander đỏ), trạng thái chờ khi agent gọi `clarify`, và `artifact_version` đang chạy. Transcript được ghi sau mỗi lượt vào `transcripts/ui_<version>_<provider>_<timestamp>.transcript.json`, cùng format với `chat.py`.
+Mở http://localhost:8501, chọn provider và **version** ở sidebar rồi bấm **Phiên mới**. Version v0–v3 đọc snapshot trong `artifacts/versions/<vN>/` (hash phải trùng `version_log.csv`; kiểm tra bằng `python scripts/verify_versions.py`), version mới nhất đọc `artifacts/` hiện tại — nhờ đó demo được cùng một câu hỏi trên v0 và bản cuối. Mỗi lượt hiển thị tool → args → result hoặc error (expander đỏ), trạng thái chờ khi agent gọi `clarify`, và `artifact_version` đang chạy. Transcript được ghi sau mỗi lượt vào `transcripts/ui_<version>_<provider>_<timestamp>.transcript.json`, cùng format với `chat.py`.
 
 Bonus tool `lookup_ticket` (tra cứu trạng thái ticket) có smoke test riêng:
 

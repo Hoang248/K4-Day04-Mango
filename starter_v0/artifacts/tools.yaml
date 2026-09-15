@@ -1,4 +1,4 @@
-# v1 — clarify missing or ambiguous tool inputs; awaiting live evaluation.
+# v4 — v3 rules + team-built bonus tool lookup_ticket (read-only ticket status).
 # Students improve routing guidance, argument conventions, missing-information
 # handling, and confirmation boundaries through v1/v2/v3.
 #
@@ -105,3 +105,13 @@ tools:
         asset_id: {type: string, default: "", description: "Mã tài sản nếu có"}
         confirmed: {type: boolean, default: false, description: "Chỉ true sau fresh yes/no confirmation cho đúng payload; nếu chưa có confirmation thì không gọi create_ticket"}
       required: [summary]
+
+  # ---------------- Team-built bonus tool ----------------
+  - name: lookup_ticket
+    description: "Tra cứu trạng thái một ticket helpdesk đã tồn tại theo ticket_id (dạng LAB-XXXXXXXX). Chỉ đọc, không tạo hay sửa ticket. Dùng khi người dùng hỏi tiến độ/trạng thái/ai đang xử lý ticket. Nếu người dùng chưa cung cấp ticket_id thì gọi clarify response_type=text để hỏi; không tự đoán mã. Muốn tạo ticket mới thì dùng create_ticket, không dùng tool này."
+    parameters:
+      type: object
+      properties:
+        ticket_id: {type: string, description: "Mã ticket do người dùng cung cấp hoặc do create_ticket trả về, ví dụ LAB-1A2B3C4D. Không dùng asset ID, employee ID hay incident ID thay thế"}
+        include_history: {type: boolean, default: false, description: "true khi người dùng muốn xem lịch sử xử lý; mặc định false chỉ trả trạng thái hiện tại"}
+      required: [ticket_id]

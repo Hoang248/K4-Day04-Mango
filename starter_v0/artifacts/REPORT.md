@@ -5,6 +5,8 @@
 - Đường dẫn bộ 30 câu cơ bản và 12 câu an toàn; commit chốt bộ trước v0: `data/eval_base.json` (20 một lượt + 10 nhiều lượt), `data/eval_adversarial.json` (dành cho CP3, chưa đánh giá ở CP1). Bộ base giữ nguyên từ commit nguồn `2c1a5ec110eba1e85f19753183c3adba105a1e5c`; đây là commit của starter, không phải commit đóng góp của nhóm.
 - Chức năng mở rộng ngoài luồng cơ bản (nếu có; tối đa 10 trong tổng 100 điểm): tool tự xây `lookup_ticket` — tra cứu trạng thái/lịch sử ticket đã tồn tại (luồng cơ bản chỉ *tạo* ticket, chưa có cách *theo dõi*). Evidence ở B5.
 
+> **Vì sao có v4 ngoài v0–v3:** khai báo bonus tool bắt buộc sửa `tools.yaml` (thêm `lookup_ticket`) và `system_prompt.md` (1 rule routing), nên hash artifact đổi và không còn trùng v3 (`v3+pf9098fb79994+te3e32380e5cf`). Để không "chỉ đổi nhãn", bản này được ghi thành **v4** (`v4+pa374dbb33ece+ta43084e87872`) với dòng riêng trong `version_log.csv` và run riêng; mọi rule an toàn/routing của v3 giữ nguyên. v0–v3 của nhóm không bị chạm; snapshot v0 và v3 nằm trong `artifacts/versions/` để UI chạy lại và đối chiếu hash. Kết quả v4: base 26/30 (v3: 27/30; case lệch H19 không gọi tool mới), group 10/10, bonus 3/3 — chi tiết ở B1, B5.
+
 ## Team
 
 - Team:

@@ -35,7 +35,7 @@ Sao chép mục này cho từng thành viên.
 - AI/công cụ đã dùng và cách kiểm tra:
 - Thời điểm đã tự nộp URL repo chung trên VLearn:
 
-### <Họ và tên> — <MSSV> (Người 3 — UI & Bonus Tool, GitHub `phatnguyen2004s`)
+### Nguyễn Tiến Phát — 2A202602387 (Người 3 — UI & Bonus Tool, GitHub `phatnguyen2004s`)
 
 - Phần việc và file/commit/PR:
   - Streamlit UI `starter_v0/app.py` hiện tool → input → kết quả/lỗi → artifact version, ghi transcript; provider `mock` (`providers/mock_provider.py`) để thử UI offline; hướng dẫn chạy trong README.

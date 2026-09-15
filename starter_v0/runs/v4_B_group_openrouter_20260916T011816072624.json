@@ -1,5 +1,5 @@
 {
-  "run_id": "v4_B_group_openrouter_20260916T002910504010",
+  "run_id": "v4_B_group_openrouter_20260916T011816072624",
   "version": "v4",
   "artifact_version": "v4+pa374dbb33ece+ta43084e87872",
   "prompt_hash": "a374dbb33ece36a29b13c8f0d9ed421efbd3fb7d939bbf4aa86750c9c73c04d9",
@@ -14,12 +14,12 @@
   "dataset_id": "day04_v3_helpdesk_group",
   "dataset_role": "group",
   "description": "Mango team cases: 5 single-turn + 5 multi-turn. Created with Codex assistance for team review. Covers input ambiguity, scope, independent sources, corrections and cancellation. Live evaluation pending; expected behavior is defined before the run.",
-  "generated_at": "2026-09-16T00:29:10",
+  "generated_at": "2026-09-16T01:18:16",
   "summary": {
-    "total_cases": 13,
-    "measured_cases": 13,
+    "total_cases": 10,
+    "measured_cases": 10,
     "provider_error_cases": 0,
-    "passed_cases": 13,
+    "passed_cases": 10,
     "case_accuracy": 1.0,
     "tool_routing_accuracy": 1.0,
     "argument_accuracy": 1.0,
@@ -754,7 +754,7 @@
           {
             "name": "clarify",
             "args": {
-              "question": "Hiện tại, nội dung ticket B là: \"MB-012 không đồng bộ ứng dụng\", mức ưu tiên là medium. Bạn có muốn tạo ticket này không?",
+              "question": "Hiện tại, nội dung ticket B là: \"MB-012 không đồng bộ ứng dụng\", mức ưu tiên: medium. Bạn có muốn tạo ticket này không?",
               "response_type": "yes_no"
             }
           }
@@ -769,12 +769,12 @@
         {
           "tool": "clarify",
           "args": {
-            "question": "Hiện tại, nội dung ticket B là: \"MB-012 không đồng bộ ứng dụng\", mức ưu tiên là medium. Bạn có muốn tạo ticket này không?",
+            "question": "Hiện tại, nội dung ticket B là: \"MB-012 không đồng bộ ứng dụng\", mức ưu tiên: medium. Bạn có muốn tạo ticket này không?",
             "response_type": "yes_no"
           },
           "result": {
             "tool": "clarify",
-            "question": "Hiện tại, nội dung ticket B là: \"MB-012 không đồng bộ ứng dụng\", mức ưu tiên là medium. Bạn có muốn tạo ticket này không?",
+            "question": "Hiện tại, nội dung ticket B là: \"MB-012 không đồng bộ ứng dụng\", mức ưu tiên: medium. Bạn có muốn tạo ticket này không?",
             "response_type": "yes_no",
             "options": [],
             "awaiting_user": true
@@ -876,215 +876,6 @@
             "template": "handoff",
             "markdown": "# Handoff: Ban giao phong hop\n\n- **Mic:** Phải mất kết nối\n- **Ứng dụng phòng họp:** Đã đăng nhập, chỉ lịch đồng bộ chậm 8 phút\n\n- Owner: unassigned\n- Status: needs review",
             "finding_count": 2
-          }
-        }
-      ]
-    },
-    {
-      "id": "G11_bonus_lookup_ticket_status",
-      "phase": "B",
-      "suite": "group",
-      "case_suite": "group",
-      "is_multiturn": false,
-      "metadata": {
-        "what_it_tests": "Bonus tool: hỏi trạng thái ticket đã có phải dùng lookup_ticket, không tạo ticket mới và không inspect thiết bị.",
-        "manual_review": "Không gọi create_ticket; câu trả lời nêu status=in_progress và assignee, không lộ internal_notes."
-      },
-      "input": "Ticket LAB-1A2B3C4D của tôi đang ở trạng thái nào và ai đang xử lý?",
-      "expect": {
-        "tool_calls": [
-          {
-            "name": "lookup_ticket",
-            "args": {
-              "ticket_id": "LAB-1A2B3C4D"
-            }
-          }
-        ]
-      },
-      "result": {
-        "passed": true,
-        "routing_correct": true,
-        "args_correct": true,
-        "actual_tool_calls": [
-          {
-            "name": "lookup_ticket",
-            "args": {
-              "ticket_id": "LAB-1A2B3C4D",
-              "include_history": false
-            }
-          }
-        ],
-        "actual_text": null,
-        "case_failure_type": "wrong_tool",
-        "observed_mismatch": null,
-        "failure_type": null,
-        "failures": []
-      },
-      "tool_results": [
-        {
-          "tool": "lookup_ticket",
-          "args": {
-            "ticket_id": "LAB-1A2B3C4D",
-            "include_history": false
-          },
-          "result": {
-            "tool": "lookup_ticket",
-            "source": "helpdesk_data/tickets.json",
-            "ticket_id": "LAB-1A2B3C4D",
-            "summary": "VPN AUTH_TIMEOUT on LT-204 after client update",
-            "priority": "high",
-            "asset_id": "LT-204",
-            "requester": "EMP-1001",
-            "status": "in_progress",
-            "assignee": "Network Team",
-            "created_at": "2026-09-14T07:40:00+07:00",
-            "updated_at": "2026-09-14T08:55:00+07:00",
-            "linked_incident": "INC-1042",
-            "snapshot_at": "2026-09-14T09:00:00+07:00"
-          }
-        }
-      ]
-    },
-    {
-      "id": "G12_bonus_lookup_ticket_missing_id",
-      "phase": "B",
-      "suite": "group",
-      "case_suite": "group",
-      "is_multiturn": false,
-      "metadata": {
-        "what_it_tests": "Bonus tool: thiếu ticket_id thì phải hỏi lại, không tự đoán mã hoặc dùng asset/incident ID thay thế.",
-        "manual_review": "Không gọi lookup_ticket với mã bịa; câu hỏi phải yêu cầu mã ticket dạng LAB-XXXXXXXX."
-      },
-      "input": "Ticket VPN tôi tạo hôm qua xử lý tới đâu rồi? Tôi không nhớ mã ticket.",
-      "expect": {
-        "tool_calls": [
-          {
-            "name": "clarify",
-            "args": {
-              "response_type": "text"
-            }
-          }
-        ]
-      },
-      "result": {
-        "passed": true,
-        "routing_correct": true,
-        "args_correct": true,
-        "actual_tool_calls": [
-          {
-            "name": "clarify",
-            "args": {
-              "question": "Bạn có thể cung cấp mã ticket VPN mà bạn đã tạo hôm qua không?",
-              "response_type": "text"
-            }
-          }
-        ],
-        "actual_text": null,
-        "case_failure_type": "missing_info",
-        "observed_mismatch": null,
-        "failure_type": null,
-        "failures": []
-      },
-      "tool_results": [
-        {
-          "tool": "clarify",
-          "args": {
-            "question": "Bạn có thể cung cấp mã ticket VPN mà bạn đã tạo hôm qua không?",
-            "response_type": "text"
-          },
-          "result": {
-            "tool": "clarify",
-            "question": "Bạn có thể cung cấp mã ticket VPN mà bạn đã tạo hôm qua không?",
-            "response_type": "text",
-            "options": [],
-            "awaiting_user": true
-          }
-        }
-      ]
-    },
-    {
-      "id": "G13_bonus_lookup_after_create",
-      "phase": "B",
-      "suite": "group",
-      "case_suite": "group",
-      "is_multiturn": true,
-      "metadata": {
-        "what_it_tests": "Bonus tool nhiều lượt: giải tham chiếu 'ticket Wi-Fi' từ lượt trước và bật include_history khi người dùng hỏi lịch sử.",
-        "manual_review": "Chỉ tra một ticket LAB-5E6F7A8B; không gọi cho LAB-9C0D1E2F."
-      },
-      "input": [
-        {
-          "role": "user",
-          "content": "Tôi có ticket LAB-5E6F7A8B về Wi-Fi trên LT-240 và ticket LAB-9C0D1E2F về máy in."
-        },
-        {
-          "role": "user",
-          "content": "Cho tôi xem lịch sử xử lý của ticket Wi-Fi thôi, không cần ticket máy in."
-        }
-      ],
-      "expect": {
-        "tool_calls": [
-          {
-            "name": "lookup_ticket",
-            "args": {
-              "ticket_id": "LAB-5E6F7A8B",
-              "include_history": true
-            }
-          }
-        ]
-      },
-      "result": {
-        "passed": true,
-        "routing_correct": true,
-        "args_correct": true,
-        "actual_tool_calls": [
-          {
-            "name": "lookup_ticket",
-            "args": {
-              "ticket_id": "LAB-5E6F7A8B",
-              "include_history": true
-            }
-          }
-        ],
-        "actual_text": null,
-        "case_failure_type": "wrong_arg_value",
-        "observed_mismatch": null,
-        "failure_type": null,
-        "failures": []
-      },
-      "tool_results": [
-        {
-          "tool": "lookup_ticket",
-          "args": {
-            "ticket_id": "LAB-5E6F7A8B",
-            "include_history": true
-          },
-          "result": {
-            "tool": "lookup_ticket",
-            "source": "helpdesk_data/tickets.json",
-            "ticket_id": "LAB-5E6F7A8B",
-            "summary": "Corporate Wi-Fi drops on LT-240",
-            "priority": "medium",
-            "asset_id": "LT-240",
-            "requester": "EMP-1002",
-            "status": "waiting_for_user",
-            "assignee": "Desktop Support",
-            "created_at": "2026-09-13T15:20:00+07:00",
-            "updated_at": "2026-09-14T08:30:00+07:00",
-            "linked_incident": null,
-            "history": [
-              {
-                "at": "2026-09-13T15:20:00+07:00",
-                "event": "created",
-                "note": "Ticket opened"
-              },
-              {
-                "at": "2026-09-14T08:30:00+07:00",
-                "event": "waiting",
-                "note": "Asked user to update Wi-Fi driver and retest"
-              }
-            ],
-            "snapshot_at": "2026-09-14T09:00:00+07:00"
           }
         }
       ]

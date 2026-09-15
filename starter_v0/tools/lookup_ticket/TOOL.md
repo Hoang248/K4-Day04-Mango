@@ -43,6 +43,14 @@ Output luôn có `tool`, `ticket_id`, `status`. Lỗi trả về trường `erro
 - Trường `internal_notes` **không bao giờ** được trả về (giữ ghi chú nội bộ trong hệ thống).
 - Không tự đoán ID: nếu người dùng chưa cung cấp `ticket_id`, agent phải gọi `clarify` trước.
 
+## Eval cases
+
+`data/eval_bonus_lookup_ticket.json` (3 case: routing, thiếu ID → clarify, multi-turn + history). Chạy:
+
+```bash
+python run_eval.py --provider openrouter --version v4 --suite extension --eval-cases data/eval_bonus_lookup_ticket.json
+```
+
 ## Smoke test
 
 ```bash

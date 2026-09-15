@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import time
 from typing import Any
 
 from providers.base import ModelResponse, ToolCall
@@ -106,11 +107,22 @@ class GeminiProvider:
             config_kwargs["tools"] = [types.Tool(function_declarations=declarations)]
 
         client = genai.Client(api_key=api_key)
-        resp = client.models.generate_content(
+        request = dict(
             model=model or self.default_model,
             contents=contents,
             config=types.GenerateContentConfig(**config_kwargs),
         )
+        # Free-tier keys are rate-limited per minute; a 429 is a transport
+        # condition, not agent behaviour, so back off and retry before giving up.
+        max_attempts = int(os.getenv("GEMINI_MAX_ATTEMPTS", "5"))
+        for attempt in range(1, max_attempts + 1):
+            try:
+                resp = client.models.generate_content(**request)
+                break
+            except Exception as exc:
+                if getattr(exc, "code", None) != 429 or attempt == max_attempts:
+                    raise
+                time.sleep(min(60, 8 * attempt))
 
         text_parts: list[str] = []
         calls: list[ToolCall] = []

@@ -7,6 +7,7 @@ import yaml
 
 from .clarify.tool import ask_user
 from .check_service_status.tool import check_service_status
+from .check_ticket_status.tool import check_ticket_status
 from .create_ticket.tool import create_ticket
 from .format_incident_report.tool import format_incident_report
 from .inspect_device.tool import inspect_device
@@ -30,6 +31,8 @@ TOOL_FUNCTIONS = {
     "format_incident_report": format_incident_report,
     "policy": search_company_policy,
     "create_ticket": create_ticket,
+    # Team-built bonus tool (see tools/check_ticket_status/TOOL.md).
+    "check_ticket_status": check_ticket_status,
 }
 
 

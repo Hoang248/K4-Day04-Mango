@@ -1,4 +1,4 @@
-# starter_v0 — intentionally incomplete first-draft declarations.
+# v1 — clarify missing or ambiguous tool inputs; awaiting live evaluation.
 # Students improve routing guidance, argument conventions, missing-information
 # handling, and confirmation boundaries through v1/v2/v3.
 #
@@ -8,13 +8,13 @@
 tools:
   # ---------------- Core tools ----------------
   - name: clarify
-    description: "Gửi một câu hỏi cho người dùng."
+    description: "Hỏi bổ sung khi yêu cầu hiện tại thiếu thông tin hoặc có nhiều cách hiểu. Trong lúc chờ trả lời, dừng các tool phụ thuộc vào thông tin đó; chỉ gọi tiếp các tool độc lập đã đủ input."
     parameters:
       type: object
       properties:
-        question: {type: string, default: "", description: "Câu hỏi"}
-        response_type: {type: string, enum: [text, yes_no, choice], default: "text", description: "Kiểu trả lời"}
-        options: {type: array, default: [], items: {type: string}, description: "Các lựa chọn"}
+        question: {type: string, default: "", description: "Câu hỏi cụ thể về thông tin còn thiếu của yêu cầu hiện tại; không hỏi lại thông tin đã có"}
+        response_type: {type: string, enum: [text, yes_no, choice], default: "text", description: "text để bổ sung thông tin tự do; choice khi có các lựa chọn rõ ràng; yes_no khi hỏi xác nhận"}
+        options: {type: array, default: [], items: {type: string}, description: "Các lựa chọn cụ thể khi response_type=choice; môi trường chưa rõ thì dùng production và staging"}
       required: [question]
 
   - name: search_kb
@@ -33,7 +33,7 @@ tools:
       type: object
       properties:
         service: {type: string, enum: [vpn, email, sso, wifi, printing], description: "Tên dịch vụ"}
-        environment: {type: string, enum: [production, staging], default: "production", description: "Môi trường"}
+        environment: {type: string, enum: [production, staging], default: "production", description: "Dùng môi trường được nêu rõ hoặc đã xác định trong hội thoại. Nếu người dùng nêu nhãn mơ hồ, gọi clarify để chọn production hoặc staging; không dùng default để thay nhãn mơ hồ"}
       required: [service]
 
   - name: inspect_device
@@ -41,7 +41,7 @@ tools:
     parameters:
       type: object
       properties:
-        asset_id: {type: string, description: "Mã tài sản"}
+        asset_id: {type: string, description: "Mã thiết bị do người dùng cung cấp hoặc có bằng chứng từ tool. Không dùng mã nhân viên, tên phòng ban, vị trí hay nhãn chung làm mã máy. Thiếu mã hoặc chưa rõ máy nào thì gọi clarify trước"}
         check: {type: string, enum: [all, network, vpn, security, hardware, software], default: "all", description: "Nhóm kiểm tra"}
       required: [asset_id]
 
@@ -50,7 +50,7 @@ tools:
     parameters:
       type: object
       properties:
-        employee_id: {type: string, description: "Mã nhân viên"}
+        employee_id: {type: string, description: "Mã nhân viên do người dùng cung cấp hoặc có bằng chứng từ tool. Không dùng tên phòng ban, chức danh hay mã thiết bị thay thế. Thiếu mã hoặc chưa rõ người nào thì gọi clarify trước"}
       required: [employee_id]
 
   - name: format_incident_report

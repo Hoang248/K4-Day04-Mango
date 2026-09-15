@@ -1,7 +1,104 @@
 {
   "dataset_id": "day04_v3_helpdesk_group",
   "dataset_role": "group",
-  "description": "Template intentionally left empty. The team must write exactly 10 original IT helpdesk cases: 5 single-turn query cases and 5 multi-turn turns cases.",
+  "description": "Mango team cases: 5 single-turn + 5 multi-turn. Created with Codex assistance for team review. Covers input ambiguity, scope, independent sources, corrections and cancellation. Live evaluation pending; expected behavior is defined before the run.",
   "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "cases": [
+    {
+      "id": "G01_choose_shared_device", "phase": "B", "suite": "group",
+      "query": "Ca trực dùng chung hai máy LT-411 và LT-318. Kiểm tra security của chiếc tôi vừa nhận, nhưng tôi chưa nói đó là chiếc nào; hãy cho tôi chọn mã máy trước.",
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [{"name": "clarify", "args": {"response_type": "choice", "options": ["LT-411", "LT-318"]}}]},
+      "metadata": {"what_it_tests": "Có hai mã hợp lệ nhưng thiếu liên kết với người dùng; không chọn mã xuất hiện gần nhất.", "manual_review": "Câu hỏi phải yêu cầu chọn một trong hai máy và không gọi inspect trước khi chọn."}
+    },
+    {
+      "id": "G02_employee_not_asset", "phase": "B", "suite": "group",
+      "query": "Tôi đang mượn máy MB-012 của đồng nghiệp, máy không đứng tên tôi. Tôi muốn tra tài khoản nhân viên của chính tôi nhưng chưa cung cấp mã nhân viên. Hãy hỏi mã đó; đừng tra chủ máy hay kiểm tra thiết bị.",
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [{"name": "clarify", "args": {"response_type": "text"}}]},
+      "metadata": {"what_it_tests": "Mã máy có thật không xác định được tài khoản người đang mượn máy.", "manual_review": "clarify phải hỏi mã nhân viên của người dùng; không hỏi mã máy đã có."}
+    },
+    {
+      "id": "G03_independent_status_and_question", "phase": "B", "suite": "group",
+      "query": "Có hai việc độc lập: kiểm tra dịch vụ printing production ngay; còn SSO thì tôi chỉ biết nhãn môi trường là sân tập, hãy hỏi tôi chọn production hay staging trước khi kiểm tra SSO.",
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [
+        {"name": "check_service_status", "args": {"service": "printing", "environment": "production"}},
+        {"name": "clarify", "args": {"response_type": "choice", "options": ["production", "staging"]}}
+      ]},
+      "metadata": {"what_it_tests": "Chỉ dừng nhánh thiếu thông tin; việc độc lập đủ input vẫn được làm.", "manual_review": "Không được gọi status SSO trước khi xác định môi trường; thứ tự hai call kỳ vọng không quan trọng."}
+    },
+    {
+      "id": "G04_two_checks_same_device", "phase": "B", "suite": "group",
+      "query": "Trên RM-501, tôi cần hai kết quả riêng: security và software. Gọi kiểm tra riêng từng nhóm trên cùng thiết bị; không lấy snapshot all và không kiểm tra hardware.",
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [
+        {"name": "inspect_device", "args": {"asset_id": "RM-501", "check": "security"}},
+        {"name": "inspect_device", "args": {"asset_id": "RM-501", "check": "software"}}
+      ]},
+      "metadata": {"what_it_tests": "Một thiết bị cần hai call cùng tên với hai check khác nhau; không gộp thành all.", "manual_review": "Hai kết quả phải đúng cùng thiết bị và đúng hai phạm vi được yêu cầu."}
+    },
+    {
+      "id": "G05_policy_and_local_guide", "phase": "B", "suite": "group",
+      "query": "Chuẩn bị buổi hướng dẫn nhân viên mới: tìm chính sách data_privacy về thông tin được ghi trong hồ sơ hỗ trợ, đồng thời tìm bài KB hướng dẫn kiểm tra mã hóa ổ đĩa. Chỉ cần hai nguồn tài liệu nội bộ, không tra người hay máy cụ thể.",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [
+        {"name": "policy", "args": {"policy_area": "data_privacy"}},
+        {"name": "search_kb", "args": {"category": "security"}}
+      ]},
+      "metadata": {"what_it_tests": "Phân biệt quy định với hướng dẫn thao tác trong một yêu cầu gồm hai nguồn.", "manual_review": "Đọc query và kết quả retrieval: đúng chủ đề quyền riêng tư và mã hóa ổ đĩa; không chỉ đúng tên tool."}
+    },
+    {
+      "id": "G06_resolve_candidate_by_os", "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Hai máy trong ca trực: LT-411 chạy Ubuntu, LT-318 chạy macOS. Tôi chưa chọn máy nào để kiểm tra network."},
+        {"role": "user", "content": "Tôi chọn chiếc Ubuntu. Chỉ xem network trên chiếc đó ngay bây giờ; chiếc macOS để nguyên."}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "inspect_device", "args": {"asset_id": "LT-411", "check": "network"}}]},
+      "metadata": {"what_it_tests": "Giải tham chiếu từ ánh xạ người dùng đã nêu; không hỏi lại khi đã chọn được một mã duy nhất.", "manual_review": "Chỉ chấm hành động lượt cuối; không kiểm tra cả hai máy."}
+    },
+    {
+      "id": "G07_partial_answer_still_missing", "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tôi muốn kiểm tra phần mềm trên chiếc laptop đang mượn nhưng chưa đọc được tem mã máy."},
+        {"role": "assistant", "content": "Bạn cung cấp mã tài sản trên tem của laptop nhé."},
+        {"role": "user", "content": "Tôi chỉ biết máy chạy Windows 11. Tem vẫn chưa đọc được; hãy hỏi lại thông tin định danh cần thiết, đừng suy ra máy từ hệ điều hành."}
+      ],
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [{"name": "clarify", "args": {"response_type": "text"}}]},
+      "metadata": {"what_it_tests": "Câu trả lời tiếp nối chỉ bổ sung OS, chưa bổ sung asset ID; không coi đã đủ thông tin.", "manual_review": "Câu hỏi phải còn yêu cầu mã tài sản; assistant turn là ngữ cảnh tác giả viết, không phải transcript đã chạy."}
+    },
+    {
+      "id": "G08_cancel_only_ticket_branch", "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tôi định tạo ticket cho hàng đợi in bị kẹt và cũng muốn tìm hướng dẫn print spooler trên Windows."},
+        {"role": "user", "content": "Hủy riêng việc tạo ticket. Vẫn tìm bài hướng dẫn print spooler trong KB giúp tôi, không cần kiểm tra máy hay status dịch vụ."}
+      ],
+      "failure_type": "unnecessary_tool",
+      "expect": {"tool_calls": [{"name": "search_kb", "args": {"category": "printing"}}]},
+      "metadata": {"what_it_tests": "Hủy một nhánh hành động không hủy yêu cầu đọc tài liệu độc lập còn lại.", "manual_review": "Không create_ticket và không hỏi xác nhận lại việc đã hủy; KB phải liên quan print spooler."}
+    },
+    {
+      "id": "G09_confirmation_wrong_ticket", "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Tôi xác nhận ticket A: mic phòng họp RM-501 bị ngắt, priority low."},
+        {"role": "user", "content": "Để ticket A lại, không xử lý nó trong lượt này. Giờ soạn ticket B độc lập: MB-012 không đồng bộ ứng dụng, priority medium. Tôi chưa xác nhận B; hãy cho xem nội dung B và hỏi có tạo không."}
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {"tool_calls": [{"name": "clarify", "args": {"response_type": "yes_no"}}]},
+      "metadata": {"what_it_tests": "Xác nhận của ticket A không được chuyển sang ticket B dù cùng cuộc hội thoại.", "manual_review": "Câu hỏi xác nhận phải nêu MB-012, lỗi đồng bộ ứng dụng và medium; không tạo A hoặc B ở lượt cuối."}
+    },
+    {
+      "id": "G10_correct_finding_before_format", "phase": "B", "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Ghi chú bàn giao: RM-501 mic phải mất kết nối; ứng dụng phòng họp chưa đăng nhập."},
+        {"role": "user", "content": "Sửa finding ứng dụng: đã đăng nhập, chỉ lịch đồng bộ chậm 8 phút. Finding mic vẫn giữ nguyên."},
+        {"role": "user", "content": "Dùng đúng hai finding sau sửa để format báo cáo handoff tên 'Ban giao phong hop'. Không thu thập lại dữ liệu và không tạo ticket."}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "format_incident_report", "args": {"template": "handoff", "incident_title": "Ban giao phong hop"}}]},
+      "metadata": {"what_it_tests": "Cập nhật một finding trong hội thoại rồi format, không mang thông tin đã bị sửa sang báo cáo.", "manual_review": "Đọc args.findings và báo cáo: đúng hai finding mic ngắt và lịch chậm 8 phút; không còn câu chưa đăng nhập. Bộ chấm tự động chỉ kiểm tra tool, template và tiêu đề."}
+    }
+  ]
 }

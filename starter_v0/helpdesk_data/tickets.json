@@ -1,0 +1,94 @@
+{
+  "snapshot_at": "2026-09-15T09:00:00+07:00",
+  "note": "Synthetic seed tickets for the team-built check_ticket_status tool. internal_notes are never returned to the user.",
+  "tickets": [
+    {
+      "ticket_id": "LAB-3F2A9C1D",
+      "summary": "VPN client báo AUTH_TIMEOUT khi kết nối từ nhà",
+      "priority": "high",
+      "status": "in_progress",
+      "asset_id": "LT-204",
+      "requester": "EMP-1001",
+      "assigned_team": "Network Support",
+      "created_at": "2026-09-14T08:15:00+07:00",
+      "updated_at": "2026-09-15T08:40:00+07:00",
+      "next_step": "Kỹ thuật viên đang đẩy cấu hình VPN mới xuống máy; dự kiến hoàn tất trong ngày.",
+      "history": [
+        {"at": "2026-09-14T08:15:00+07:00", "status": "open", "note": "Ticket được tạo từ trợ lý helpdesk."},
+        {"at": "2026-09-14T10:02:00+07:00", "status": "in_progress", "note": "Network Support tiếp nhận, xác nhận lỗi AUTH_TIMEOUT trên gateway khu vực."},
+        {"at": "2026-09-15T08:40:00+07:00", "status": "in_progress", "note": "Đang triển khai cấu hình VPN 5.2.2."}
+      ],
+      "internal_notes": "Escalation contact: netops-oncall. Gateway cert rotation scheduled 2026-09-16."
+    },
+    {
+      "ticket_id": "LAB-7B1E44C0",
+      "summary": "Wi-Fi văn phòng rớt liên tục trên laptop",
+      "priority": "medium",
+      "status": "waiting_for_user",
+      "asset_id": "LT-240",
+      "requester": "EMP-1002",
+      "assigned_team": "Desktop Support",
+      "created_at": "2026-09-13T14:20:00+07:00",
+      "updated_at": "2026-09-14T16:05:00+07:00",
+      "next_step": "Chờ người dùng xác nhận đã cập nhật driver Wi-Fi theo hướng dẫn KB.",
+      "history": [
+        {"at": "2026-09-13T14:20:00+07:00", "status": "open", "note": "Ticket được tạo."},
+        {"at": "2026-09-14T09:30:00+07:00", "status": "in_progress", "note": "Desktop Support gửi hướng dẫn cập nhật driver."},
+        {"at": "2026-09-14T16:05:00+07:00", "status": "waiting_for_user", "note": "Chờ phản hồi từ người dùng."}
+      ],
+      "internal_notes": "User has missed two follow-ups; auto-close after 5 business days."
+    },
+    {
+      "ticket_id": "LAB-9D0C5E2B",
+      "summary": "Máy in tầng 3 kẹt giấy và báo lỗi E-52",
+      "priority": "low",
+      "status": "resolved",
+      "asset_id": "PR-404",
+      "requester": "EMP-1005",
+      "assigned_team": "Facilities IT",
+      "created_at": "2026-09-12T11:00:00+07:00",
+      "updated_at": "2026-09-12T15:45:00+07:00",
+      "next_step": "Đã xử lý. Ticket sẽ tự đóng sau 2 ngày nếu không có phản hồi thêm.",
+      "history": [
+        {"at": "2026-09-12T11:00:00+07:00", "status": "open", "note": "Ticket được tạo."},
+        {"at": "2026-09-12T13:10:00+07:00", "status": "in_progress", "note": "Kỹ thuật viên đến kiểm tra tại chỗ."},
+        {"at": "2026-09-12T15:45:00+07:00", "status": "resolved", "note": "Thay roller, in thử thành công."}
+      ],
+      "internal_notes": "Vendor RMA reference PRN-2291."
+    },
+    {
+      "ticket_id": "LAB-1C8E7A55",
+      "summary": "Tài khoản bị khóa sau nhiều lần nhập sai mật khẩu",
+      "priority": "high",
+      "status": "open",
+      "asset_id": "",
+      "requester": "EMP-1003",
+      "assigned_team": "Identity & Access",
+      "created_at": "2026-09-15T08:05:00+07:00",
+      "updated_at": "2026-09-15T08:05:00+07:00",
+      "next_step": "Identity & Access sẽ liên hệ xác minh danh tính trước khi mở khóa.",
+      "history": [
+        {"at": "2026-09-15T08:05:00+07:00", "status": "open", "note": "Ticket được tạo, chờ tiếp nhận."}
+      ],
+      "internal_notes": "Verify via manager callback only; do not unlock over chat."
+    },
+    {
+      "ticket_id": "LAB-5E6F0A19",
+      "summary": "Yêu cầu cài Microsoft Visio cho máy DT-087",
+      "priority": "low",
+      "status": "closed",
+      "asset_id": "DT-087",
+      "requester": "EMP-1007",
+      "assigned_team": "Software Deployment",
+      "created_at": "2026-09-08T09:30:00+07:00",
+      "updated_at": "2026-09-10T10:00:00+07:00",
+      "next_step": "Không còn hành động nào; mở ticket mới nếu cần hỗ trợ thêm.",
+      "history": [
+        {"at": "2026-09-08T09:30:00+07:00", "status": "open", "note": "Ticket được tạo."},
+        {"at": "2026-09-09T14:00:00+07:00", "status": "resolved", "note": "Đã cài đặt qua Software Center."},
+        {"at": "2026-09-10T10:00:00+07:00", "status": "closed", "note": "Người dùng xác nhận hoạt động tốt."}
+      ],
+      "internal_notes": "License pool: VISIO-STD-2024, seat 17."
+    }
+  ]
+}

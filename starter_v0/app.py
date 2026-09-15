@@ -134,7 +134,7 @@ def render_tool_event(event: dict[str, Any], key: str) -> None:
     args = event.get("args", {})
     result = event.get("result", {})
     is_error = result_is_error(result)
-    awaiting = isinstance(result, dict) and result.get("awaiting_user")
+    awaiting = bool(isinstance(result, dict) and result.get("awaiting_user"))
 
     if is_error:
         label = f"🔴 `{tool}` → error: `{result.get('error')}`"

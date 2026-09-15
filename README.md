@@ -77,6 +77,22 @@ python run_eval.py --provider openrouter --version v0 --suite base --eval-cases 
 
 Thay `openrouter` bằng `openai`, `anthropic` hoặc `gemini` khi dùng provider khác. Không commit `.env`.
 
+### Giao diện chat (Streamlit)
+
+Chạy từ `starter_v0/` sau khi đã cài `requirements.txt` và điền `.env` (Windows: `.\.venv\Scripts\Activate.ps1`; macOS/Linux: `source .venv/bin/activate`):
+
+```bash
+streamlit run app.py
+```
+
+Mở http://localhost:8501, chọn provider và nhãn version ở sidebar rồi bấm **Phiên mới**. Mỗi lượt hiển thị tool → args → result hoặc error (expander đỏ), trạng thái chờ khi agent gọi `clarify`, và `artifact_version` đang chạy. Transcript được ghi sau mỗi lượt vào `transcripts/ui_<version>_<provider>_<timestamp>.transcript.json`, cùng format với `chat.py`.
+
+Bonus tool `lookup_ticket` (tra cứu trạng thái ticket) có smoke test riêng:
+
+```bash
+python -m tools.lookup_ticket.smoke_test
+```
+
 ## Tài liệu cần đọc
 
 | File | Dùng khi |

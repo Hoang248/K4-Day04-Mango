@@ -77,6 +77,18 @@ python run_eval.py --provider openrouter --version v0 --suite base --eval-cases 
 
 Thay `openrouter` bằng `openai`, `anthropic` hoặc `gemini` khi dùng provider khác. Không commit `.env`.
 
+## Chạy UI chat (Streamlit)
+
+UI đọc `artifacts/system_prompt.md` và `artifacts/tools.yaml` lúc chạy, hiện từng tool call với input, kết quả/lỗi tool và `artifact_version` (hash prompt + tools); mỗi lượt được ghi vào `transcripts/`.
+
+```powershell
+cd starter_v0
+python -m pip install -r requirements.txt
+streamlit run app.py
+```
+
+Chọn provider và nhãn phiên bản (v0–v3) ở sidebar. Provider `mock` chạy không cần key, chỉ để thử UI; transcript từ `mock` không dùng làm evidence. Bonus tool của nhóm: [starter_v0/tools/check_ticket_status/TOOL.md](starter_v0/tools/check_ticket_status/TOOL.md), smoke test `python -m tools.check_ticket_status.smoke_test`, case kiểm thử `data/eval_bonus_ticket_status.json`.
+
 ## Tài liệu cần đọc
 
 | File | Dùng khi |

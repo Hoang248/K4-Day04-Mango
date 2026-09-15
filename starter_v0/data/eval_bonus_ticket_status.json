@@ -1,0 +1,68 @@
+{
+  "dataset_id": "day04_v3_helpdesk_bonus_ticket_status",
+  "dataset_role": "bonus",
+  "description": "Team-authored cases for the bonus tool check_ticket_status. Run with: python run_eval.py --provider <p> --version <vN> --suite group --eval-cases data/eval_bonus_ticket_status.json. Person 1 may copy any of these into data/eval_group.json.",
+  "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
+  "cases": [
+    {
+      "id": "T01_ticket_status_routing",
+      "phase": "B",
+      "suite": "group",
+      "query": "Ticket LAB-3F2A9C1D của mình xử lý tới đâu rồi?",
+      "failure_type": "wrong_tool",
+      "expect": {"tool_calls": [{"name": "check_ticket_status", "args": {"ticket_id": "LAB-3F2A9C1D"}}]},
+      "metadata": {"skill": "route_ticket_status", "difficulty": "easy", "what_it_tests": "Hỏi tiến độ ticket đã có phải dùng check_ticket_status, không tạo ticket mới hay tra policy."}
+    },
+    {
+      "id": "T02_ticket_status_with_history",
+      "phase": "B",
+      "suite": "group",
+      "query": "Cho mình xem tiến độ ticket LAB-7B1E44C0 kèm toàn bộ lịch sử cập nhật.",
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "check_ticket_status", "args": {"ticket_id": "LAB-7B1E44C0", "include_history": true}}]},
+      "metadata": {"skill": "ticket_status_args", "difficulty": "medium", "what_it_tests": "Yêu cầu lịch sử phải bật include_history=true."}
+    },
+    {
+      "id": "T03_ticket_status_missing_id",
+      "phase": "B",
+      "suite": "group",
+      "query": "Ticket mình gửi hôm qua đã được xử lý chưa?",
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [{"name": "clarify", "args": {}}]},
+      "metadata": {"skill": "ticket_status_clarify", "difficulty": "medium", "what_it_tests": "Không có mã ticket thì phải hỏi lại, không đoán mã hay tra cứu bừa."}
+    },
+    {
+      "id": "T04_multiturn_fill_ticket_id",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Ticket của mình tới đâu rồi?"},
+        {"role": "user", "content": "Mã ticket là LAB-1C8E7A55."}
+      ],
+      "failure_type": "missing_info",
+      "expect": {"tool_calls": [{"name": "check_ticket_status", "args": {"ticket_id": "LAB-1C8E7A55"}}]},
+      "metadata": {"skill": "multiturn_fill_ticket_id", "difficulty": "hard", "what_it_tests": "Sau khi người dùng bổ sung mã ở lượt sau phải tra cứu đúng mã đó."}
+    },
+    {
+      "id": "T05_multiturn_correct_ticket_id",
+      "phase": "B",
+      "suite": "group",
+      "turns": [
+        {"role": "user", "content": "Kiểm tra tiến độ ticket LAB-7B1E44C0 giúp mình."},
+        {"role": "user", "content": "Nhầm rồi, mã đúng là LAB-9D0C5E2B, kiểm tra cái đó."}
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {"tool_calls": [{"name": "check_ticket_status", "args": {"ticket_id": "LAB-9D0C5E2B"}}]},
+      "metadata": {"skill": "multiturn_correction", "difficulty": "hard", "what_it_tests": "Tôn trọng sửa mã ở lượt sau; dùng mã mới nhất."}
+    },
+    {
+      "id": "T06_list_all_tickets_boundary",
+      "phase": "B",
+      "suite": "group",
+      "query": "Liệt kê toàn bộ ticket đang mở của cả công ty cho mình.",
+      "failure_type": "wrong_boundary",
+      "expect": {"no_tool": true},
+      "metadata": {"skill": "ticket_status_boundary", "difficulty": "medium", "what_it_tests": "Tool chỉ tra cứu một mã cụ thể; không được gọi tool với ký tự đại diện, phải từ chối và nói rõ cần mã ticket."}
+    }
+  ]
+}

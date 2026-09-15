@@ -1,0 +1,418 @@
+{
+  "run_id": "v0_B_group_gemini_20260915T191536192560",
+  "version": "v0",
+  "artifact_version": "v0+p27467914bc4d+tbe4455471445",
+  "prompt_hash": "27467914bc4d93574eb1a418b77247c51682e04401c78fb4445c22b9019185a0",
+  "tools_hash": "be4455471445df3e9e0a8f529aae734ad55f1cf40e5a07086324a352bf57cf27",
+  "phase": "B",
+  "suite": "group",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "system_prompt": "/Users/phat/ToDO/K4-Day04-Mango/starter_v0/artifacts/system_prompt.md",
+  "tools": "/Users/phat/ToDO/K4-Day04-Mango/starter_v0/artifacts/tools.yaml",
+  "eval_cases": "data/eval_bonus_ticket_status.json",
+  "dataset_id": "day04_v3_helpdesk_bonus_ticket_status",
+  "dataset_role": "bonus",
+  "description": "Team-authored cases for the bonus tool check_ticket_status. Run with: python run_eval.py --provider <p> --version <vN> --suite group --eval-cases data/eval_bonus_ticket_status.json. Person 1 may copy any of these into data/eval_group.json.",
+  "generated_at": "2026-09-15T19:15:36",
+  "summary": {
+    "total_cases": 6,
+    "measured_cases": 6,
+    "provider_error_cases": 0,
+    "passed_cases": 6,
+    "case_accuracy": 1.0,
+    "tool_routing_accuracy": 1.0,
+    "argument_accuracy": 1.0,
+    "multiturn_accuracy": 1.0,
+    "failure_counts": {},
+    "observed_mismatch_counts": {}
+  },
+  "results": [
+    {
+      "id": "T01_ticket_status_routing",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "route_ticket_status",
+        "difficulty": "easy",
+        "what_it_tests": "Hỏi tiến độ ticket đã có phải dùng check_ticket_status, không tạo ticket mới hay tra policy."
+      },
+      "input": "Ticket LAB-3F2A9C1D của mình xử lý tới đâu rồi?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "check_ticket_status",
+            "args": {
+              "ticket_id": "LAB-3F2A9C1D"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "check_ticket_status",
+            "args": {
+              "ticket_id": "LAB-3F2A9C1D"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "check_ticket_status",
+          "args": {
+            "ticket_id": "LAB-3F2A9C1D"
+          },
+          "result": {
+            "tool": "check_ticket_status",
+            "ticket": {
+              "ticket_id": "LAB-3F2A9C1D",
+              "summary": "VPN client báo AUTH_TIMEOUT khi kết nối từ nhà",
+              "priority": "high",
+              "status": "in_progress",
+              "asset_id": "LT-204",
+              "requester": "EMP-1001",
+              "assigned_team": "Network Support",
+              "created_at": "2026-09-14T08:15:00+07:00",
+              "updated_at": "2026-09-15T08:40:00+07:00",
+              "next_step": "Kỹ thuật viên đang đẩy cấu hình VPN mới xuống máy; dự kiến hoàn tất trong ngày."
+            },
+            "source": "seed",
+            "snapshot_at": "2026-09-15T09:00:00+07:00"
+          }
+        }
+      ]
+    },
+    {
+      "id": "T02_ticket_status_with_history",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "ticket_status_args",
+        "difficulty": "medium",
+        "what_it_tests": "Yêu cầu lịch sử phải bật include_history=true."
+      },
+      "input": "Cho mình xem tiến độ ticket LAB-7B1E44C0 kèm toàn bộ lịch sử cập nhật.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "check_ticket_status",
+            "args": {
+              "ticket_id": "LAB-7B1E44C0",
+              "include_history": true
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "check_ticket_status",
+            "args": {
+              "ticket_id": "LAB-7B1E44C0",
+              "include_history": true
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "check_ticket_status",
+          "args": {
+            "ticket_id": "LAB-7B1E44C0",
+            "include_history": true
+          },
+          "result": {
+            "tool": "check_ticket_status",
+            "ticket": {
+              "ticket_id": "LAB-7B1E44C0",
+              "summary": "Wi-Fi văn phòng rớt liên tục trên laptop",
+              "priority": "medium",
+              "status": "waiting_for_user",
+              "asset_id": "LT-240",
+              "requester": "EMP-1002",
+              "assigned_team": "Desktop Support",
+              "created_at": "2026-09-13T14:20:00+07:00",
+              "updated_at": "2026-09-14T16:05:00+07:00",
+              "next_step": "Chờ người dùng xác nhận đã cập nhật driver Wi-Fi theo hướng dẫn KB."
+            },
+            "source": "seed",
+            "snapshot_at": "2026-09-15T09:00:00+07:00",
+            "history": [
+              {
+                "at": "2026-09-13T14:20:00+07:00",
+                "status": "open",
+                "note": "Ticket được tạo."
+              },
+              {
+                "at": "2026-09-14T09:30:00+07:00",
+                "status": "in_progress",
+                "note": "Desktop Support gửi hướng dẫn cập nhật driver."
+              },
+              {
+                "at": "2026-09-14T16:05:00+07:00",
+                "status": "waiting_for_user",
+                "note": "Chờ phản hồi từ người dùng."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "T03_ticket_status_missing_id",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "ticket_status_clarify",
+        "difficulty": "medium",
+        "what_it_tests": "Không có mã ticket thì phải hỏi lại, không đoán mã hay tra cứu bừa."
+      },
+      "input": "Ticket mình gửi hôm qua đã được xử lý chưa?",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {}
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text",
+              "question": "Bạn vui lòng cung cấp mã ticket (ví dụ: LAB-XXXXXXXX) để mình kiểm tra trạng thái nhé."
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "response_type": "text",
+            "question": "Bạn vui lòng cung cấp mã ticket (ví dụ: LAB-XXXXXXXX) để mình kiểm tra trạng thái nhé."
+          },
+          "result": {
+            "tool": "clarify",
+            "question": "Bạn vui lòng cung cấp mã ticket (ví dụ: LAB-XXXXXXXX) để mình kiểm tra trạng thái nhé.",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "T04_multiturn_fill_ticket_id",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_fill_ticket_id",
+        "difficulty": "hard",
+        "what_it_tests": "Sau khi người dùng bổ sung mã ở lượt sau phải tra cứu đúng mã đó."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Ticket của mình tới đâu rồi?"
+        },
+        {
+          "role": "user",
+          "content": "Mã ticket là LAB-1C8E7A55."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "check_ticket_status",
+            "args": {
+              "ticket_id": "LAB-1C8E7A55"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "check_ticket_status",
+            "args": {
+              "ticket_id": "LAB-1C8E7A55"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "check_ticket_status",
+          "args": {
+            "ticket_id": "LAB-1C8E7A55"
+          },
+          "result": {
+            "tool": "check_ticket_status",
+            "ticket": {
+              "ticket_id": "LAB-1C8E7A55",
+              "summary": "Tài khoản bị khóa sau nhiều lần nhập sai mật khẩu",
+              "priority": "high",
+              "status": "open",
+              "asset_id": "",
+              "requester": "EMP-1003",
+              "assigned_team": "Identity & Access",
+              "created_at": "2026-09-15T08:05:00+07:00",
+              "updated_at": "2026-09-15T08:05:00+07:00",
+              "next_step": "Identity & Access sẽ liên hệ xác minh danh tính trước khi mở khóa."
+            },
+            "source": "seed",
+            "snapshot_at": "2026-09-15T09:00:00+07:00"
+          }
+        }
+      ]
+    },
+    {
+      "id": "T05_multiturn_correct_ticket_id",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "skill": "multiturn_correction",
+        "difficulty": "hard",
+        "what_it_tests": "Tôn trọng sửa mã ở lượt sau; dùng mã mới nhất."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Kiểm tra tiến độ ticket LAB-7B1E44C0 giúp mình."
+        },
+        {
+          "role": "user",
+          "content": "Nhầm rồi, mã đúng là LAB-9D0C5E2B, kiểm tra cái đó."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "check_ticket_status",
+            "args": {
+              "ticket_id": "LAB-9D0C5E2B"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "check_ticket_status",
+            "args": {
+              "ticket_id": "LAB-9D0C5E2B"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "check_ticket_status",
+          "args": {
+            "ticket_id": "LAB-9D0C5E2B"
+          },
+          "result": {
+            "tool": "check_ticket_status",
+            "ticket": {
+              "ticket_id": "LAB-9D0C5E2B",
+              "summary": "Máy in tầng 3 kẹt giấy và báo lỗi E-52",
+              "priority": "low",
+              "status": "resolved",
+              "asset_id": "PR-404",
+              "requester": "EMP-1005",
+              "assigned_team": "Facilities IT",
+              "created_at": "2026-09-12T11:00:00+07:00",
+              "updated_at": "2026-09-12T15:45:00+07:00",
+              "next_step": "Đã xử lý. Ticket sẽ tự đóng sau 2 ngày nếu không có phản hồi thêm."
+            },
+            "source": "seed",
+            "snapshot_at": "2026-09-15T09:00:00+07:00"
+          }
+        }
+      ]
+    },
+    {
+      "id": "T06_list_all_tickets_boundary",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "skill": "ticket_status_boundary",
+        "difficulty": "medium",
+        "what_it_tests": "Tool chỉ tra cứu một mã cụ thể; không được gọi tool với ký tự đại diện, phải từ chối và nói rõ cần mã ticket."
+      },
+      "input": "Liệt kê toàn bộ ticket đang mở của cả công ty cho mình.",
+      "expect": {
+        "no_tool": true
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "```json\n{\n  \"intent\": \"list_tickets\",\n  \"action\": \"out_of_scope\",\n  \"reply\": \"Tôi không có quyền liệt kê toàn bộ ticket của cả công ty. Tôi chỉ có thể giúp bạn kiểm tra trạng thái của một ticket cụ thể (theo mã ticket), tạo ticket mới, tra cứu chính sách, hướng dẫn kỹ thuật hoặc kiểm tra thiết bị và dịch vụ của bạn.\",\n  \"evidence_ids\": []\n}\n```",
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    }
+  ]
+}

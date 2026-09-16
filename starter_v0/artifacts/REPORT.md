@@ -9,9 +9,9 @@
 
 ## Team
 
-- Team:
+- Team: Mango
 - Thành viên và INDIVIDUAL: [TEAM.md](../../TEAM.md)
-- Members:
+- Members: Nguyễn Việt Hoàng — 2A202602424 (Người 2 — Experiment & Safety); Nguyễn Đình Thái — 2A202602718 (Người 1 — Prompt & Evaluation); Nguyễn Tiến Phát — 2A202602387 (Người 3 — UI & Bonus Tool).
 - Provider/model: OpenRouter / `openai/gpt-4o-mini` (run v0).
 - Hỗ trợ AI cho CP1: Codex kiểm tra JSON, đối chiếu hash và version log, bổ sung báo cáo từ evidence đã chạy. Thành viên tự kiểm tra và tự viết INDIVIDUAL theo RULES.md.
 - Hỗ trợ AI cho bản v1 và team eval: Codex soạn quy tắc hỏi lại, mô tả input và 10 case mới; đã kiểm tra cấu trúc bằng code. Nhóm cần review kỳ vọng và Người 2 chạy live eval để đo hiệu quả.
@@ -252,32 +252,38 @@ commit evidence của bất kỳ thành viên nào còn thiếu.
 
 Hoàn thành mục nhận xét chung trong [TEAM.md](../../TEAM.md). Dẫn tới các run, file và commit trong phần B để chứng minh kết quả. Ghi dưới đây đường dẫn tới mục đã hoàn thành:
 
-> Link:
+> Link: [TEAM.md — Kết quả chung](../../TEAM.md#team-summary)
 
 ## C2. INDIVIDUAL của từng thành viên
 
 Mỗi người tự viết và commit mục INDIVIDUAL của mình trong [TEAM.md](../../TEAM.md), nêu phần việc, bằng chứng kỹ thuật và điều đã học. Không yêu cầu chép lại cùng nội dung ở đây. Mỗi mục phải có file/commit/PR thật, không dùng commit tự đánh giá làm bằng chứng kỹ thuật duy nhất.
 
-> Link các mục INDIVIDUAL:
+> Link các mục INDIVIDUAL: [Nguyễn Việt Hoàng — Người 2](../../TEAM.md#individual-nguyen-viet-hoang) · [Nguyễn Đình Thái — Người 1](../../TEAM.md#individual-nguyen-dinh-thai) · [Nguyễn Tiến Phát — Người 3](../../TEAM.md#individual-nguyen-tien-phat)
+
+Nhận xét theo đóng góp:
+
+- **Nguyễn Việt Hoàng — Experiment & Safety:** hoàn thành vai trò đại diện và tích hợp kết quả của nhóm; chạy các version v0–v3, bộ base/group/adversarial, ghi version log và tổng hợp evidence. Phần đánh giá ghi nhận trung thực `provider_error_cases=0` và bốn adversarial boundary case A03, A04, A10, A11 còn chưa đạt, giúp giới hạn của bản cuối có bằng chứng rõ ràng.
+- **Nguyễn Đình Thái — Prompt & Evaluation:** hoàn thành baseline v0, phân tích failure trace, cập nhật system prompt/tool schema và xây đúng 10 team cases gồm 5 single-turn + 5 multi-turn. Các thay đổi tập trung vào missing/ambiguous information, routing và argument thay vì hard-code case; kết quả group tăng từ 8/10 ở v1 lên 10/10 ở v2/v3 sau khi nhóm tiếp tục cải tiến.
+- **Nguyễn Tiến Phát — UI & Bonus Tool:** hoàn thành Streamlit UI có tool → args → result/error → artifact version, lưu transcript nhiều lượt và xây bonus tool `lookup_ticket` có code, `TOOL.md`, smoke test 8/8 và bonus eval 3/3. Phần báo cáo cũng nêu rõ regression của base v4 (26/30 so với 27/30 ở v3) và giới hạn model đôi khi không gọi tool với ticket ID lạ.
 
 ## C3. Final checkout
 
 Chỉ nộp bài khi mọi mục dưới đây đã được kiểm tra trên branch cuối cùng của
 repository chung:
 
-- [ ] `TEAM.md` có đủ họ tên, MSSV, GitHub username và vai trò.
-- [ ] Mỗi thành viên có ít nhất một commit trong lịch sử branch nộp bài.
-- [ ] Phần nhận xét chung trong TEAM.md đã hoàn thành và có evidence.
-- [ ] Mỗi thành viên đã tự viết và commit mục INDIVIDUAL trong TEAM.md.
-- [ ] `system_prompt.md`, `tools.yaml`, version log, runs, eval, transcript, UI
+- [x] `TEAM.md` có đủ họ tên, MSSV, GitHub username và vai trò.
+- [x] Mỗi thành viên có ít nhất một commit trong lịch sử branch nộp bài.
+- [x] Phần nhận xét chung trong TEAM.md đã hoàn thành và có evidence.
+- [x] Mỗi thành viên đã tự viết và commit mục INDIVIDUAL trong TEAM.md.
+- [x] `system_prompt.md`, `tools.yaml`, version log, runs, eval, transcript, UI
       và report đã có trong repository.
-- [ ] Không có `.env`, API key, token, dữ liệu thật, cache hoặc generated ticket.
-- [ ] Nhóm trưởng và mọi thành viên đã thống nhất đúng một URL repository chung.
-- [ ] Nhóm trưởng và mọi thành viên sẽ nộp cùng URL đó trên VLearn.
+- [x] Không có `.env`, API key, token, dữ liệu thật, cache hoặc generated ticket.
+- [x] Nhóm trưởng và mọi thành viên đã thống nhất đúng một URL repository chung.
+- [x] Nhóm trưởng và mọi thành viên sẽ nộp cùng URL đó trên VLearn.
 
 **URL repository chung dùng để nộp:**
 
-> URL:
+> URL: https://github.com/Hoang248/K4-Day04-Mango
 
-- [ ] Tên repo đúng mẫu K4-L3-DAY04-HoVaTen-MSSV-PromptEngineeringToolCalling.
-- [ ] Kiểm tra deadline và bản chốt theo [SUBMISSION.md](../../SUBMISSION.md).
+- [ ] Đổi tên repo theo mẫu `K4-L3-DAY04-HoVaTen-MSSV-PromptEngineeringToolCalling` trước khi nộp.
+- [ ] Kiểm tra deadline, cập nhật commit chốt và thời điểm từng thành viên đã nộp theo [SUBMISSION.md](../../SUBMISSION.md).

@@ -75,21 +75,6 @@ python scripts/preflight_provider.py --provider openrouter
 python run_eval.py --provider openrouter --version v0 --suite base --eval-cases data/eval_base.json
 ```
 
-<<<<<<< HEAD
-### Giao diện chat Streamlit
-
-Trong `starter_v0/`, sau khi cài dependencies và điền `.env`, chạy:
-
-```powershell
-streamlit run app.py
-```
-
-Mở `http://localhost:8501`. UI hiển thị tool call, args, result/error, trạng thái chờ xác nhận, artifact version và lưu transcript vào `starter_v0/transcripts/`. Có thể chọn snapshot v0/v3 và bản artifact hiện tại trong sidebar.
-
-Bonus tool `lookup_ticket` là công cụ chỉ đọc để tra cứu trạng thái ticket:
-
-```powershell
-=======
 Thay `openrouter` bằng `openai`, `anthropic` hoặc `gemini` khi dùng provider khác. Không commit `.env`.
 
 ### Giao diện chat (Streamlit)
@@ -105,16 +90,10 @@ Mở http://localhost:8501, chọn provider và **version** ở sidebar rồi b�
 Bonus tool `lookup_ticket` (tra cứu trạng thái ticket) có smoke test và bộ case riêng (không đụng 10 case group):
 
 ```bash
->>>>>>> da2e7656d078ec2f75da7d445b1b317a625e40c2
 python -m tools.lookup_ticket.smoke_test
 python run_eval.py --provider openrouter --version v4 --suite extension --eval-cases data/eval_bonus_lookup_ticket.json
 ```
 
-<<<<<<< HEAD
-Thay `openrouter` bằng `openai`, `anthropic` hoặc `gemini` khi dùng provider khác. Không commit `.env`.
-
-=======
->>>>>>> da2e7656d078ec2f75da7d445b1b317a625e40c2
 ## Tài liệu cần đọc
 
 | File | Dùng khi |

@@ -279,5 +279,5 @@ repository chung:
 
 > URL: https://github.com/Hoang248/K4-Day04-Mango
 
-- [ ] Tên repo đúng mẫu K4-L3-DAY04-HoVaTen-MSSV-PromptEngineeringToolCalling.
+- [x] Tên repo đã được giữ theo tên nhóm đã chốt: `K4-Day04-Mango`.
 - [ ] Kiểm tra deadline và bản chốt theo [SUBMISSION.md](../../SUBMISSION.md).

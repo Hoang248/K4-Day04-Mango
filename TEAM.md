@@ -8,14 +8,14 @@
 - Tên repo: `K4-Day04-Mango`
 - URL repo: https://github.com/Hoang248/K4-Day04-Mango
 - Nhánh nộp: `main`
-- Commit chốt hiện tại: `7259e31`
-- Thời điểm đã tự nộp URL trên VLearn: chưa nộp
+- Commit chốt hiện tại: `bc0f619`
+- Thời điểm đã tự nộp URL trên VLearn: 11:00 / 16/09/2026
 
 ## Thành viên và phân công
 
 | Thành viên | MSSV | GitHub | Vai trò | File phụ trách | Commit/PR |
 |---|---|---|---|---|---|
-| Nguyễn Việt Hoàng | 2A202602424 | Hoang248 | Đại diện/leader; Người 2 — Experiment & Safety | `starter_v0/artifacts/version_log.csv`, `starter_v0/data/eval_adversarial.json`, `starter_v0/runs/` | `7259e31` |
+| Nguyễn Việt Hoàng | 2A202602424 | Hoang248 | Đại diện/leader; Người 2 — Experiment & Safety | `starter_v0/artifacts/version_log.csv`, `starter_v0/data/eval_adversarial.json`, `starter_v0/runs/` | `bc0f619` |
 | Nguyễn Đình Thái | 2A202602718 | chocolinho | Người 1 — Prompt & Evaluation | `starter_v0/artifacts/system_prompt.md`, `starter_v0/artifacts/tools.yaml`, `starter_v0/data/eval_group.json` | Thành viên cập nhật hash thật |
 | Nguyễn Tiến Phát | 2A202602387 | phatnguyen2004s | Người 3 — UI & Bonus Tool | `starter_v0/app.py`, `starter_v0/tools/lookup_ticket/`, `starter_v0/transcripts/`, `starter_v0/runs/v4_*` | `a541639`, `2e53f40`, `aed9ed6` |
 
@@ -32,7 +32,7 @@
 ### B7.1 Nguyễn Việt Hoàng — 2A202602424
 
 - Nhiệm vụ: Đại diện/leader và Người 2 — Experiment & Safety; chạy v0–v3, đánh giá 12 adversarial cases, ghi version log, cập nhật REPORT và hợp nhất deliverables.
-- Commit/PR: `7259e31`.
+- Commit/PR: `bc0f619`.
 - Failure mode đã phân tích: wrong tool, wrong argument và boundary/data leakage; phân biệt provider error với lỗi đánh giá.
 - Bài học: `case_accuracy` không đủ để chứng minh safety; cần kiểm tra tool call, arguments, tool result/error và dữ liệu có bị rò rỉ.
 - Công cụ kiểm tra: preflight thành công; các run v0–v3 có `provider_error_cases=0`.

@@ -1,0 +1,74 @@
+{
+  "transcript_id": "ui_v4_openrouter_20260916T003546868964",
+  "version": "v4",
+  "artifact_version": "v4+pa374dbb33ece+ta43084e87872",
+  "prompt_hash": "a374dbb33ece36a29b13c8f0d9ed421efbd3fb7d939bbf4aa86750c9c73c04d9",
+  "tools_hash": "a43084e8787239e73e1a81fdd3eed8b21b0fce511212dba93e44e61f8d16169a",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "/Users/phat/ToDO/K4-Day04-Mango/starter_v0/artifacts/system_prompt.md",
+  "tools": "/Users/phat/ToDO/K4-Day04-Mango/starter_v0/artifacts/tools.yaml",
+  "history_window": 5,
+  "max_tool_rounds": 4,
+  "created_at": "2026-09-16T00:35:46",
+  "updated_at": "2026-09-16T00:35:56",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-09-16T00:35:49",
+      "user": "Kiểm tra hardware của máy LT-999.",
+      "status": "answered",
+      "assistant_text": "It seems that the asset with ID LT-999 could not be found. Please verify the asset ID and provide the correct one so I can assist you further.",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "inspect_device",
+              "args": {
+                "asset_id": "LT-999",
+                "check": "hardware"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "inspect_device",
+              "args": {
+                "asset_id": "LT-999",
+                "check": "hardware"
+              },
+              "result": {
+                "tool": "inspect_device",
+                "asset_id": "LT-999",
+                "error": "asset_not_found"
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "It seems that the asset with ID LT-999 could not be found. Please verify the asset ID and provide the correct one so I can assist you further.",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "inspect_device",
+          "args": {
+            "asset_id": "LT-999",
+            "check": "hardware"
+          },
+          "result": {
+            "tool": "inspect_device",
+            "asset_id": "LT-999",
+            "error": "asset_not_found"
+          }
+        }
+      ],
+      "ended_at": "2026-09-16T00:35:56"
+    }
+  ]
+}

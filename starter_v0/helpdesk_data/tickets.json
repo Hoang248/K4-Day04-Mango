@@ -1,0 +1,57 @@
+{
+  "snapshot_at": "2026-09-14T09:00:00+07:00",
+  "tickets": [
+    {
+      "ticket_id": "LAB-1A2B3C4D",
+      "summary": "VPN AUTH_TIMEOUT on LT-204 after client update",
+      "priority": "high",
+      "asset_id": "LT-204",
+      "requester": "EMP-1001",
+      "status": "in_progress",
+      "assignee": "Network Team",
+      "created_at": "2026-09-14T07:40:00+07:00",
+      "updated_at": "2026-09-14T08:55:00+07:00",
+      "linked_incident": "INC-1042",
+      "history": [
+        {"at": "2026-09-14T07:40:00+07:00", "event": "created", "note": "Ticket opened from helpdesk chat"},
+        {"at": "2026-09-14T08:10:00+07:00", "event": "assigned", "note": "Routed to Network Team"},
+        {"at": "2026-09-14T08:55:00+07:00", "event": "linked", "note": "Linked to incident INC-1042 (VPN degraded)"}
+      ],
+      "internal_notes": "Suspected clock skew on client; do not share with requester until confirmed."
+    },
+    {
+      "ticket_id": "LAB-5E6F7A8B",
+      "summary": "Corporate Wi-Fi drops on LT-240",
+      "priority": "medium",
+      "asset_id": "LT-240",
+      "requester": "EMP-1002",
+      "status": "waiting_for_user",
+      "assignee": "Desktop Support",
+      "created_at": "2026-09-13T15:20:00+07:00",
+      "updated_at": "2026-09-14T08:30:00+07:00",
+      "linked_incident": null,
+      "history": [
+        {"at": "2026-09-13T15:20:00+07:00", "event": "created", "note": "Ticket opened"},
+        {"at": "2026-09-14T08:30:00+07:00", "event": "waiting", "note": "Asked user to update Wi-Fi driver and retest"}
+      ],
+      "internal_notes": ""
+    },
+    {
+      "ticket_id": "LAB-9C0D1E2F",
+      "summary": "Printer PR-404 spooler stuck on floor 3",
+      "priority": "low",
+      "asset_id": "PR-404",
+      "requester": "EMP-1005",
+      "status": "resolved",
+      "assignee": "Desktop Support",
+      "created_at": "2026-09-12T10:05:00+07:00",
+      "updated_at": "2026-09-12T11:40:00+07:00",
+      "linked_incident": null,
+      "history": [
+        {"at": "2026-09-12T10:05:00+07:00", "event": "created", "note": "Ticket opened"},
+        {"at": "2026-09-12T11:40:00+07:00", "event": "resolved", "note": "Spooler service restarted; user confirmed printing works"}
+      ],
+      "internal_notes": ""
+    }
+  ]
+}

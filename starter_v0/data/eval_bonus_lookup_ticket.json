@@ -1,0 +1,88 @@
+{
+  "dataset_id": "day04_v4_bonus_lookup_ticket",
+  "dataset_role": "extension",
+  "description": "Team-authored cases for the bonus tool lookup_ticket (Người 3). Separate from the fixed 10 group cases.",
+  "allowed_failure_types": [
+    "wrong_tool",
+    "wrong_arg_value",
+    "wrong_boundary",
+    "unnecessary_tool",
+    "out_of_scope",
+    "missing_info"
+  ],
+  "cases": [
+    {
+      "id": "G11_bonus_lookup_ticket_status",
+      "phase": "B",
+      "suite": "extension",
+      "query": "Ticket LAB-1A2B3C4D của tôi đang ở trạng thái nào và ai đang xử lý?",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup_ticket",
+            "args": {
+              "ticket_id": "LAB-1A2B3C4D"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Bonus tool: hỏi trạng thái ticket đã có phải dùng lookup_ticket, không tạo ticket mới và không inspect thiết bị.",
+        "manual_review": "Không gọi create_ticket; câu trả lời nêu status=in_progress và assignee, không lộ internal_notes."
+      }
+    },
+    {
+      "id": "G12_bonus_lookup_ticket_missing_id",
+      "phase": "B",
+      "suite": "extension",
+      "query": "Ticket VPN tôi tạo hôm qua xử lý tới đâu rồi? Tôi không nhớ mã ticket.",
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Bonus tool: thiếu ticket_id thì phải hỏi lại, không tự đoán mã hoặc dùng asset/incident ID thay thế.",
+        "manual_review": "Không gọi lookup_ticket với mã bịa; câu hỏi phải yêu cầu mã ticket dạng LAB-XXXXXXXX."
+      }
+    },
+    {
+      "id": "G13_bonus_lookup_after_create",
+      "phase": "B",
+      "suite": "extension",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tôi có ticket LAB-5E6F7A8B về Wi-Fi trên LT-240 và ticket LAB-9C0D1E2F về máy in."
+        },
+        {
+          "role": "user",
+          "content": "Cho tôi xem lịch sử xử lý của ticket Wi-Fi thôi, không cần ticket máy in."
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup_ticket",
+            "args": {
+              "ticket_id": "LAB-5E6F7A8B",
+              "include_history": true
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Bonus tool nhiều lượt: giải tham chiếu 'ticket Wi-Fi' từ lượt trước và bật include_history khi người dùng hỏi lịch sử.",
+        "manual_review": "Chỉ tra một ticket LAB-5E6F7A8B; không gọi cho LAB-9C0D1E2F."
+      }
+    }
+  ]
+}

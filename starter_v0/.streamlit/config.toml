@@ -1,0 +1,11 @@
+# Theme for app.py (Streamlit chat UI). Dark "console" look, high-contrast text.
+[theme]
+base = "dark"
+primaryColor = "#0e9fbf"
+backgroundColor = "#0b1220"
+secondaryBackgroundColor = "#111a2e"
+textColor = "#e5e7eb"
+font = "sans serif"
+
+[browser]
+gatherUsageStats = false

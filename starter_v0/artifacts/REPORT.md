@@ -126,7 +126,7 @@ Failure tiêu biểu chọn từ v0:
 - Prompt SHA-256: `e98102928bb0f9b1238b151bec598fbdb09807ae8e7132ab1e8ddd40ef7711db`.
 - Tools SHA-256: `6b85488e3d912b067b9ac364df3788f199669667bff5e188efb164fb337c4020`.
 - Đã kiểm tra tĩnh: 9 declaration khớp chữ ký tool; 10 case nhóm đúng 5+5; expected args dùng tên/enum hợp lệ; bộ base/adversarial/extension không đổi. Kiểm tra fixture với evaluator chỉ chứng minh cấu trúc tương thích, không phải điểm model.
-- Chưa chạy provider, chưa có run hoặc metric v1. Version log vẫn chỉ ghi v0 đã đo.
+- Ghi chú tại checkpoint chuẩn bị v1: khi viết mục này nhóm chưa chạy provider. Sau đó nhóm đã chạy và cập nhật run/metric v1 trong `version_log.csv` và các file dưới `runs/`.
 
 Người 2 lấy đúng commit bàn giao sau khi tác giả commit/push, rồi chạy trong `starter_v0`:
 
